@@ -1,3 +1,5 @@
 git is awesome
 
 git is awesome
+
+[alternate branch]
