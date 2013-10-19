@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/UGAACM-GameDev.iml" filepath="$PROJECT_DIR$/UGAACM-GameDev.iml" />
-      <module fileurl="file://$PROJECT_DIR$/UGAACM-GameDev2.iml" filepath="$PROJECT_DIR$/UGAACM-GameDev2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Warped/Warped.iml" filepath="$PROJECT_DIR$/Warped/Warped.iml" />
     </modules>
   </component>
