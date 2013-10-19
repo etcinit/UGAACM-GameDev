@@ -1,4 +1,4 @@
-package com.chromabits.ugaacm.Warped.opengl;
+package com.chromabits.ugaacm.opengl;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -24,7 +24,7 @@ public class Triangle implements Drawable{
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 
         // Set color
-        gl.glColor4f(0.0f, 1.0f, 0.0f, 0.5f);
+        Color.GREEN.setGlColor(gl);
 
         // Point to the vertex buffer
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer.getBuffer());

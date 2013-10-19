@@ -1,4 +1,4 @@
-package com.chromabits.ugaacm.Warped.opengl;
+package com.chromabits.ugaacm.opengl;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

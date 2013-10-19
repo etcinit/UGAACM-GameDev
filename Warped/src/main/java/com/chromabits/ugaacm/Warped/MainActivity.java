@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.chromabits.ugaacm.Warped.opengl.GlRenderer;
+import com.chromabits.ugaacm.opengl.GlRenderer;
 
     public class MainActivity extends Activity {
 

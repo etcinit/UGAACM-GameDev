@@ -1,4 +1,4 @@
-package com.chromabits.ugaacm.Warped.opengl;
+package com.chromabits.ugaacm.opengl;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
