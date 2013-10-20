@@ -6,6 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 
+import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 
 /**
@@ -58,9 +59,12 @@ public class GlRenderer implements Renderer{
 
         // TEMPORAL TEST CODE
         // Draw a triangle
-        Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
-                new Vertex(0.5f,-0.5f,0.0f),
-                new Vertex(0.0f,0.5f,0.0f));
-        t1.draw(gl);
+        //Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
+        //        new Vertex(0.5f,-0.5f,0.0f),
+        //        new Vertex(0.0f,0.5f,0.0f));
+        //t1.draw(gl);
+
+        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(0.5f,0.5f,0.0f));
+        r1.draw(gl);
     }
 }
