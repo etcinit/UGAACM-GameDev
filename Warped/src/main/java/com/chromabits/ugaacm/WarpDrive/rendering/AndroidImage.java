@@ -1,9 +1,9 @@
-package com.chromabits.ugaacm.framework.implementation;
+package com.chromabits.ugaacm.WarpDrive.render;
 
 import android.graphics.Bitmap;
 
-import com.chromabits.ugaacm.framework.Image;
-import com.chromabits.ugaacm.framework.Graphics.Format;
+import com.chromabits.ugaacm.WarpDrive.render.Image;
+import com.chromabits.ugaacm.WarpDrive.render.Graphics.Format;
 
 public class AndroidImage implements Image {
     Bitmap bitmap;

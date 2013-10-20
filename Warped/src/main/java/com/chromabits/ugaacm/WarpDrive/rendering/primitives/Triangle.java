@@ -1,4 +1,9 @@
-package com.chromabits.ugaacm.opengl;
+package com.chromabits.ugaacm.WarpDrive.render.primitives;
+
+import com.chromabits.ugaacm.WarpDrive.render.Color;
+import com.chromabits.ugaacm.WarpDrive.render.Drawable;
+import com.chromabits.ugaacm.WarpDrive.render.Vertex;
+import com.chromabits.ugaacm.WarpDrive.render.VertexBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -6,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Eduardo Trujillo on 10/19/13.
  */
-public class Triangle implements Drawable{
+public class Triangle implements Drawable {
 
     private VertexBuffer vertexBuffer; // Buffer for holding all the vertices
 

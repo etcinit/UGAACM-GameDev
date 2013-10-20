@@ -1,4 +1,4 @@
-package com.chromabits.ugaacm.framework.implementation;
+package com.chromabits.ugaacm.WarpDrive.render;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,9 +13,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Color;
-
-import com.chromabits.ugaacm.framework.Graphics;
-import com.chromabits.ugaacm.framework.Image;
 
 public class AndroidGraphics implements Graphics {
     AssetManager assets;

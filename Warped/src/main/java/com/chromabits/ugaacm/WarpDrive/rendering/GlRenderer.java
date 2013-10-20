@@ -1,10 +1,12 @@
-package com.chromabits.ugaacm.opengl;
+package com.chromabits.ugaacm.WarpDrive.render;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
+
+import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 
 /**
  * Created by delta6 on 10/19/13.

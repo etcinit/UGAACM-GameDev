@@ -1,6 +1,6 @@
-package com.chromabits.ugaacm.framework;
+package com.chromabits.ugaacm.WarpDrive.render;
 
-import com.chromabits.ugaacm.framework.Graphics.Format;
+import com.chromabits.ugaacm.WarpDrive.render.Graphics.Format;
 
 public interface Image {
 
