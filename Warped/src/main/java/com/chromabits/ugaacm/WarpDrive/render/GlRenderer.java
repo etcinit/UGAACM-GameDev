@@ -14,6 +14,28 @@ import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
  */
 public class GlRenderer implements Renderer{
 
+    private World currentWorld;
+
+    public GlRenderer(){
+        currentWorld = new World();
+
+        // Test code
+        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
+        Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
+        Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
+        Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
+
+
+        r1.setBgColor(Color.BLUE);
+        r2.setBgColor(Color.GREEN);
+        r3.setBgColor(Color.RED);
+
+        currentWorld.addObject(r1);
+        currentWorld.addObject(r2);
+        currentWorld.addObject(r3);
+        currentWorld.addObject(r4);
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
         // Do nothing for now
@@ -64,7 +86,6 @@ public class GlRenderer implements Renderer{
         //        new Vertex(0.0f,0.5f,0.0f));
         //t1.draw(gl);
 
-        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(0.5f,0.5f,0.0f));
-        r1.draw(gl);
+        currentWorld.draw(gl);
     }
 }

@@ -1,6 +1,5 @@
 package com.chromabits.ugaacm.WarpDrive.render.primitives;
 
-<<<<<<< .merge_file_a09408
 import com.chromabits.ugaacm.WarpDrive.render.Color;
 import com.chromabits.ugaacm.WarpDrive.render.Drawable;
 import com.chromabits.ugaacm.WarpDrive.render.Vertex;
@@ -14,9 +13,13 @@ import javax.microedition.khronos.opengles.GL10;
 public class Rectangle implements Drawable{
 
     private VertexBuffer vertexBuffer;
+    private Color backgroundColor;
 
     public Rectangle(Vertex start, Vertex end){
         vertexBuffer = new VertexBuffer();
+
+        // Set default color
+        backgroundColor = Color.WHITE;
 
         // Create all four vertices
         vertexBuffer.add(start);
@@ -25,12 +28,16 @@ public class Rectangle implements Drawable{
         vertexBuffer.add(end);
     }
 
+    public void setBgColor(Color c){
+        backgroundColor = c;
+    }
+
     @Override
     public void draw(GL10 gl) {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 
         // Set color
-        Color.GREEN.setGlColor(gl);
+        backgroundColor.setGlColor(gl);
 
         // Point to the vertex buffer
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer.getBuffer());
