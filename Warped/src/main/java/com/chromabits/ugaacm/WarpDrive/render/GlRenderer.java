@@ -6,12 +6,35 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 
+import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 
 /**
  * Created by delta6 on 10/19/13.
  */
 public class GlRenderer implements Renderer{
+
+    private World currentWorld;
+
+    public GlRenderer(){
+        currentWorld = new World();
+
+        // Test code
+        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
+        Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
+        Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
+        Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
+
+
+        r1.setBgColor(Color.BLUE);
+        r2.setBgColor(Color.GREEN);
+        r3.setBgColor(Color.RED);
+
+        currentWorld.addObject(r1);
+        currentWorld.addObject(r2);
+        currentWorld.addObject(r3);
+        currentWorld.addObject(r4);
+    }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
@@ -58,9 +81,11 @@ public class GlRenderer implements Renderer{
 
         // TEMPORAL TEST CODE
         // Draw a triangle
-        Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
-                new Vertex(0.5f,-0.5f,0.0f),
-                new Vertex(0.0f,0.5f,0.0f));
-        t1.draw(gl);
+        //Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
+        //        new Vertex(0.5f,-0.5f,0.0f),
+        //        new Vertex(0.0f,0.5f,0.0f));
+        //t1.draw(gl);
+
+        currentWorld.draw(gl);
     }
 }

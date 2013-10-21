@@ -14,13 +14,21 @@ import javax.microedition.khronos.opengles.GL10;
 public class Triangle implements Drawable {
 
     private VertexBuffer vertexBuffer; // Buffer for holding all the vertices
+    private Color backgroundColor;
 
     public Triangle(Vertex v0, Vertex v1, Vertex v2){
         vertexBuffer = new VertexBuffer();
 
+        // Set default color
+        backgroundColor = Color.WHITE;
+
         vertexBuffer.add(v0);
         vertexBuffer.add(v1);
         vertexBuffer.add(v2);
+    }
+
+    public void setBgColor(Color c){
+        backgroundColor = c;
     }
 
 
@@ -29,7 +37,7 @@ public class Triangle implements Drawable {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 
         // Set color
-        Color.GREEN.setGlColor(gl);
+        backgroundColor.setGlColor(gl);
 
         // Point to the vertex buffer
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer.getBuffer());

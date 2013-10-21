@@ -22,4 +22,16 @@ public class Vertex {
         this.y = y;
         this.z = z;
     }
+
+    public float getX(){
+        return x;
+    }
+
+    public float getY(){
+        return y;
+    }
+
+    public float getZ(){
+        return z;
+    }
 }
