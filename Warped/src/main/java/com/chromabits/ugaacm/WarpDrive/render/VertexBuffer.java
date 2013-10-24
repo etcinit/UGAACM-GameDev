@@ -20,7 +20,7 @@ public class VertexBuffer {
         vertices.add(v);
     }
 
-    public FloatBuffer getBuffer(){
+    public FloatBuffer getBuffer(boolean useColor){
         FloatBuffer buffer;
         // A float has 4 bytes so we allocate for each coordinate 4 bytes
         ByteBuffer bbuffer = ByteBuffer.allocateDirect(vertices.size() * 3 * 4);

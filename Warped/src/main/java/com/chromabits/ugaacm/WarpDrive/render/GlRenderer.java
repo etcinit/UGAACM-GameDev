@@ -3,8 +3,10 @@ package com.chromabits.ugaacm.WarpDrive.render;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
+import android.opengl.Matrix;
 
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
@@ -15,6 +17,8 @@ import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 public class GlRenderer implements Renderer{
 
     private World currentWorld;
+
+    private float[] mViewMatrix = new float[16];
 
     public GlRenderer(){
         currentWorld = new World();
@@ -49,35 +53,39 @@ public class GlRenderer implements Renderer{
         }
 
         // Reset viewport
-        gl.glViewport(0,0,width,height);
+        GLES20.glViewport(0,0,width,height);
+        //gl.glViewport(0,0,width,height);
 
         // Select projection matrix
-        gl.glMatrixMode(GL10.GL_PROJECTION);
-
+        //gl.glMatrixMode(GL10.GL_PROJECTION);
         // Reset projection matrix
-        gl.glLoadIdentity();
+        //gl.glLoadIdentity();
 
+        lookAt(new Vertex(0.0f,0.0f,1.5f),
+                new Vertex(0.0f,0.0f,-5.0f),
+                new Vertex(0.0f,1.0f,0.0f));
 
         // Calculate aspect ratio
-        GLU.gluPerspective(gl, 45.0f, (float)width/(float)height, 0.1f, 100.0f);
+        //GLU.gluPerspective(gl, 45.0f, (float)width/(float)height, 0.1f, 100.0f);
 
         // Select model view matrix
-        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        //gl.glMatrixMode(GL10.GL_MODELVIEW);
 
         // Reset model view matrix
-        gl.glLoadIdentity();
+        //gl.glLoadIdentity();
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
         // Clear the screen and the depth buffer
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        //gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Reset model view matrix
-        gl.glLoadIdentity();
+        //gl.glLoadIdentity();
 
         // Move "camera" away by 5 units
-        gl.glTranslatef(0.0f,0.0f,-5.0f);
+        //gl.glTranslatef(0.0f,0.0f,-5.0f);
 
         // TEMPORAL TEST CODE
         // Draw a triangle
@@ -87,5 +95,17 @@ public class GlRenderer implements Renderer{
         //t1.draw(gl);
 
         currentWorld.draw(gl);
+    }
+
+    /**
+     * Set where the "camera" is looking at
+     * @param eye The position of the camera in the world
+     * @param look Direction vector pointing where the camera is looking at
+     * @param up Direction vector for where "up" is in the world
+     */
+    public void lookAt(Vertex eye, Vertex look, Vertex up){
+        Matrix.setLookAtM(mViewMatrix, 0, eye.getX(), eye.getY(), eye.getZ(),
+                look.getX(), look.getY(), look.getZ(),
+                up.getX(), up.getY(), up.getZ());
     }
 }

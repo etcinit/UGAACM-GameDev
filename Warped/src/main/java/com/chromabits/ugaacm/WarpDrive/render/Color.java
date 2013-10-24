@@ -26,4 +26,20 @@ public class Color {
     public void setGlColor(GL10 gl){
         gl.glColor4f(r,g,b,alpha);
     }
+
+    public float getR() {
+        return r;
+    }
+
+    public float getG(){
+        return g;
+    }
+
+    public float getB(){
+        return b;
+    }
+
+    public float getAlpha(){
+        return alpha;
+    }
 }

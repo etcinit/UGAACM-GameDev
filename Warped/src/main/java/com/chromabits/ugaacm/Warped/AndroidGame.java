@@ -1,5 +1,7 @@
 package com.chromabits.ugaacm.Warped;
 
+import android.app.ActivityManager;
+import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,12 +13,15 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 
 import com.chromabits.ugaacm.WarpDrive.control.Game;
+import com.chromabits.ugaacm.WarpDrive.render.Gl2SurfaceView;
 import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
 import com.chromabits.ugaacm.WarpDrive.control.Screen;
+import com.chromabits.ugaacm.WarpDrive.render.UnsupportedHardwareException;
 
 public abstract class AndroidGame extends Activity implements Game {
 
     private GLSurfaceView glSurfaceV;
+    private Gl2SurfaceView glView;
     private Screen screen;
     WakeLock wakeLock;
 
@@ -35,14 +40,21 @@ public abstract class AndroidGame extends Activity implements Game {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // Create a surfaceView instance
-        glSurfaceV = new GLSurfaceView(this);
+        try{
+            // Create a surfaceView instance
+            glView = new Gl2SurfaceView(this);
 
-        // Set renderer
-        glSurfaceV.setRenderer(new GlRenderer());
+            // Set renderer
+            glView.setRenderer(new GlRenderer());
 
-        // Set main view
-        setContentView(glSurfaceV);
+            // Set main view
+            setContentView(glView);
+        }
+        catch(UnsupportedHardwareException ex){
+            // Hardware doesn't support GL ES 2
+            // TODO: Inform the user that their hardware is not supported
+            ex.printStackTrace();
+        }
 
         // Initialize objects
         screen = getInitScreen();
