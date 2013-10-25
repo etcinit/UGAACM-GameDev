@@ -1,8 +1,10 @@
 package com.chromabits.ugaacm.WarpDrive.physics;
 
 import com.chromabits.ugaacm.WarpDrive.physics.Vector2;
+import com.chromabits.ugaacm.WarpDrive.physics.Boundary;
+import com.chromabits.ugaacm.WarpDrive.physics.Manifold;
 
-public class Circle{
+public class Circle implements Boundary{
 
   public double radius;
   public Vector2 center;
@@ -19,4 +21,8 @@ public class Circle{
     return r < this.center.distance2(c.center);
   }
   
+  public Manifold getCollisionManifold(Boundary B){
+    //@TODO: Implement
+    return null;
+  }
 }

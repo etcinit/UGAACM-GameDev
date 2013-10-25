@@ -1,7 +1,11 @@
 package com.chromabits.ugaacm.WarpDrive.physics;
-import com.chromabits.ugaacm.WarpDrive.physics.Vector2;
 
-public class AABB{
+import com.chromabits.ugaacm.WarpDrive.physics.Vector2;
+import com.chromabits.ugaacm.WarpDrive.physics.Boundary;
+import com.chromabits.ugaacm.WarpDrive.physics.Manifold;
+
+
+public class AABB implements Boundary{
   public Vector2 min;
   public Vector2 max;
   
@@ -26,5 +30,9 @@ public class AABB{
     return true;
   }
   
+  public Manifold getCollisionManifold(Boundary B){
+    //@TODO: Implement
+    return null;
+  }
   
 }
