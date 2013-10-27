@@ -12,7 +12,7 @@ import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 
 /**
- * Created by delta6 on 10/19/13.
+ * Created by Eduardo Trujillo <ed@chromabits.com> on 10/19/13.
  */
 public class GlRenderer implements Renderer{
 
