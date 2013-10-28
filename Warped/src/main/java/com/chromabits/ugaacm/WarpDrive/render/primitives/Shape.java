@@ -60,7 +60,7 @@ public class Shape implements Drawable{
         GLES20.glUniform4fv(mColorHandle, 1, color.getFloatArray(), 0);
 
         // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexBuffer.count());
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, vertexBuffer.count());
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);

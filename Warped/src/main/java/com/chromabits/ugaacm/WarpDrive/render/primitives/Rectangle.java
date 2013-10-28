@@ -13,15 +13,12 @@ import javax.microedition.khronos.opengles.GL10;
 public class Rectangle extends Shape{
 
     public Rectangle(Vertex start, Vertex end){
-        /*vertexBuffer = new VertexBuffer();
-
-        // Set default color
-        color = Color.WHITE;
+        super();
 
         // Create all four vertices
         vertexBuffer.add(start);
         vertexBuffer.add(new Vertex(start.getX(),end.getY(),start.getZ()));
         vertexBuffer.add(new Vertex(end.getX(),start.getY(),start.getZ()));
-        vertexBuffer.add(end);*/
+        vertexBuffer.add(end);
     }
 }

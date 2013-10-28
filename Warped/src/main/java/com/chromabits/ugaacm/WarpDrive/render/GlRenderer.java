@@ -35,32 +35,36 @@ public class GlRenderer implements Renderer{
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
 
-        glp = new GlProgram();
-        VertexShader vs = VertexShader.getBasicShader();
-        FragmentShader fs = FragmentShader.getBasicShader();
-        vs.load();
-        fs.load();
-        glp.attachShader(vs);
-        glp.attachShader(fs);
-        glp.link();
+        try{
+            glp = new GlProgram();
+            VertexShader vs = VertexShader.getBasicShader();
+            FragmentShader fs = FragmentShader.getBasicShader();
+            vs.load();
+            fs.load();
+            glp.attachShader(vs);
+            glp.attachShader(fs);
+            glp.link();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
 
-        //currentWorld = new World();
+        currentWorld = new World();
 
         // Test code
-        //Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
-        //Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
-        //Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
-        //Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
+        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
+        Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
+        Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
+        Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
 
 
-        //r1.setColor(Color.BLUE);
-        //r2.setColor(Color.GREEN);
-        //r3.setColor(Color.RED);
+        r1.setColor(Color.BLUE);
+        r2.setColor(Color.GREEN);
+        r3.setColor(Color.RED);
 
-        //currentWorld.addObject(r1);
-        //currentWorld.addObject(r2);
-        //currentWorld.addObject(r3);
-        //currentWorld.addObject(r4);
+        currentWorld.addObject(r1);
+        currentWorld.addObject(r2);
+        currentWorld.addObject(r3);
+        currentWorld.addObject(r4);
 
         t1 = new Triangle();
 
@@ -116,9 +120,9 @@ public class GlRenderer implements Renderer{
         //Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
         //        new Vertex(0.5f,-0.5f,0.0f),
         //        new Vertex(0.0f,0.5f,0.0f));
-        t1.draw(glp);
+        //t1.draw(glp);
 
-        //currentWorld.draw(glp);
+        currentWorld.draw(glp);
     }
 
     /**

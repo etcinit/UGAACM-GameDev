@@ -11,7 +11,7 @@ public class ShaderManager {
 
     private ArrayList<Integer> shaderHandles;
 
-    public int load(Shader s){
+    public int load(Shader s) throws Exception{
         int shader = s.load();
 
         // add shader to handle list
