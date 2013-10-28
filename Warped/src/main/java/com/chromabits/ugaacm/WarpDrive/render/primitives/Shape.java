@@ -19,6 +19,7 @@ public class Shape{
     protected Color color;
 
     protected int mColorHandle;
+    protected VertexBuffer vertexBuffer;
 
     public Shape(){
 

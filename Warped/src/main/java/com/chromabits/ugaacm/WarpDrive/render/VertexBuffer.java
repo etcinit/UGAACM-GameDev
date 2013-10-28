@@ -20,6 +20,22 @@ public class VertexBuffer {
         vertices.add(v);
     }
 
+    public float[] getFloatArray(){
+        float[] result = new float[vertices.size() * Vertex.COORDS_PER_VERTEX];
+
+        int i = 0;
+        for (Vertex vertex : vertices){
+            result[i] = vertex.getX();
+            i++;
+            result[i] = vertex.getY();
+            i++;
+            result[i] = vertex.getZ();
+            i++;
+        }
+
+        return result;
+    }
+
     public FloatBuffer getBuffer(){
         FloatBuffer buffer;
         // A float has 4 bytes so we allocate for each coordinate 4 bytes
@@ -31,9 +47,7 @@ public class VertexBuffer {
         buffer = bbuffer.asFloatBuffer();
 
         // Put vertices on the float buffer
-        for (Vertex vertex : vertices) {
-            buffer.put(vertex.getFloatArray());
-        }
+        buffer.put(getFloatArray());
 
         // Set position to the beginning of the buffer
         buffer.position(0);

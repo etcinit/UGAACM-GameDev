@@ -4,6 +4,8 @@ import android.opengl.GLES20;
 
 import com.chromabits.ugaacm.WarpDrive.render.Color;
 import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
+import com.chromabits.ugaacm.WarpDrive.render.Vertex;
+import com.chromabits.ugaacm.WarpDrive.render.VertexBuffer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -24,7 +26,7 @@ public class Triangle extends Shape{
                     "  gl_FragColor = vColor;" +
                     "}";
 
-    private final FloatBuffer vertexBuffer;
+    //private FloatBuffer vertexBuffer;
     private final int mProgram;
     private int mPositionHandle;
 
@@ -46,12 +48,18 @@ public class Triangle extends Shape{
         // use the device hardware's native byte order
         bb.order(ByteOrder.nativeOrder());
 
+        vertexBuffer = new VertexBuffer();
+
+        vertexBuffer.add(new Vertex(0.0f,  0.622008459f, 0.0f));
+        vertexBuffer.add(new Vertex(-0.5f, -0.311004243f, 0.0f));
+        vertexBuffer.add(new Vertex(0.5f, -0.311004243f, 0.0f));
+
         // create a floating point buffer from the ByteBuffer
-        vertexBuffer = bb.asFloatBuffer();
+        //vertexBuffer = bb.asFloatBuffer();
         // add the coordinates to the FloatBuffer
-        vertexBuffer.put(triangleCoords);
+        //vertexBuffer.put(triangleCoords);
         // set the buffer to read the first coordinate
-        vertexBuffer.position(0);
+        //vertexBuffer.position(0);
 
         // prepare shaders and OpenGL program
         int vertexShader = GlRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
@@ -80,7 +88,7 @@ public class Triangle extends Shape{
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
-                vertexStride, vertexBuffer);
+                vertexStride, vertexBuffer.getBuffer());
 
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
