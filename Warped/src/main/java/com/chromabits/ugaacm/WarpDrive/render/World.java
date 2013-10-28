@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * Created by ${MyName} on 10/20/13.
+ * Created by Eduardo Trujillo <ed@chromabits.com> on 10/20/13.
  */
 public class World implements Drawable{
 
@@ -21,9 +21,9 @@ public class World implements Drawable{
 
 
     @Override
-    public void draw(GL10 gl) {
+    public void draw(GlProgram glp) {
         for (Drawable object : contents) {
-            object.draw(gl);
+            object.draw(glp);
         }
     }
 }

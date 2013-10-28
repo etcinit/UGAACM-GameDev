@@ -1,6 +1,7 @@
 package com.chromabits.ugaacm.WarpDrive.render.shaders;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 /**
  * Created by Eduardo Trujillo <ed@chromabits.com> on 10/27/13.
@@ -42,6 +43,15 @@ public class VertexShader implements Shader{
         // add the source code to the shader and compile it
         GLES20.glShaderSource(handle, this.getCode());
         GLES20.glCompileShader(handle);
+
+        int[] compiled = new int[1];
+        GLES20.glGetShaderiv(handle, GLES20.GL_COMPILE_STATUS, compiled, 0);
+        if (compiled[0] == 0) {
+            Log.e("WarpGL", "Could not compile shader " + getType() + ":");
+            Log.e("WarpGL", GLES20.glGetShaderInfoLog(handle));
+            GLES20.glDeleteShader(handle);
+            handle = 0;
+        }
 
         return handle;
     }

@@ -47,6 +47,8 @@ public abstract class AndroidGame extends Activity implements Game {
             // Set renderer
             glView.setRenderer(new GlRenderer());
 
+            glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
             // Set main view
             setContentView(glView);
         }

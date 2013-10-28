@@ -7,9 +7,12 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
+import com.chromabits.ugaacm.WarpDrive.render.shaders.FragmentShader;
+import com.chromabits.ugaacm.WarpDrive.render.shaders.VertexShader;
 
 /**
  * Created by Eduardo Trujillo <ed@chromabits.com> on 10/19/13.
@@ -17,40 +20,52 @@ import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 public class GlRenderer implements Renderer{
 
     private World currentWorld;
+    private GlProgram glp;
+
+    private Triangle t1;
 
     private float[] mViewMatrix = new float[16];
 
     public GlRenderer(){
-        currentWorld = new World();
 
-        // Test code
-        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
-        Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
-        Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
-        Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
-
-
-        r1.setBgColor(Color.BLUE);
-        r2.setBgColor(Color.GREEN);
-        r3.setBgColor(Color.RED);
-
-        currentWorld.addObject(r1);
-        currentWorld.addObject(r2);
-        currentWorld.addObject(r3);
-        currentWorld.addObject(r4);
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
-        // Do nothing for now
+        // Set the background frame color
+        GLES20.glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
+
+        //currentWorld = new World();
+
+        // Test code
+        //Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
+        //Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
+        //Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
+        //Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
+
+
+        //r1.setColor(Color.BLUE);
+        //r2.setColor(Color.GREEN);
+        //r3.setColor(Color.RED);
+
+        //currentWorld.addObject(r1);
+        //currentWorld.addObject(r2);
+        //currentWorld.addObject(r3);
+        //currentWorld.addObject(r4);
+
+        t1 = new Triangle();
+
+        //currentWorld.addObject(t1);
+
+
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         // Prevent divide by zero
-        if(height == 0){
-            height = 1;
-        }
+        //if(height == 0){
+        //    height = 1;
+        //}
 
         // Reset viewport
         GLES20.glViewport(0,0,width,height);
@@ -61,9 +76,9 @@ public class GlRenderer implements Renderer{
         // Reset projection matrix
         //gl.glLoadIdentity();
 
-        lookAt(new Vertex(0.0f,0.0f,1.5f),
-                new Vertex(0.0f,0.0f,-5.0f),
-                new Vertex(0.0f,1.0f,0.0f));
+        //lookAt(new Vertex(0.0f,0.0f,1.5f),
+        //        new Vertex(0.0f,0.0f,-5.0f),
+        //        new Vertex(0.0f,1.0f,0.0f));
 
         // Calculate aspect ratio
         //GLU.gluPerspective(gl, 45.0f, (float)width/(float)height, 0.1f, 100.0f);
@@ -92,9 +107,9 @@ public class GlRenderer implements Renderer{
         //Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
         //        new Vertex(0.5f,-0.5f,0.0f),
         //        new Vertex(0.0f,0.5f,0.0f));
-        //t1.draw(gl);
+        t1.draw();
 
-        currentWorld.draw(gl);
+        //currentWorld.draw(glp);
     }
 
     /**
@@ -107,5 +122,38 @@ public class GlRenderer implements Renderer{
         Matrix.setLookAtM(mViewMatrix, 0, eye.getX(), eye.getY(), eye.getZ(),
                 look.getX(), look.getY(), look.getZ(),
                 up.getX(), up.getY(), up.getZ());
+    }
+
+    /**
+     * Utility method for debugging OpenGL calls. Provide the name of the call
+     * just after making it:
+     *
+     * <pre>
+     * mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
+     * MyGLRenderer.checkGlError("glGetUniformLocation");</pre>
+     *
+     * If the operation is not successful, the check throws an error.
+     *
+     * @param glOperation - Name of the OpenGL call to check.
+     */
+    public static void checkGlError(String glOperation) {
+        int error;
+        while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+            Log.e("WarpGL", glOperation + ": glError " + error);
+            throw new RuntimeException(glOperation + ": glError " + error);
+        }
+    }
+
+    public static int loadShader(int type, String shaderCode){
+
+        // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
+        // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
+        int shader = GLES20.glCreateShader(type);
+
+        // add the source code to the shader and compile it
+        GLES20.glShaderSource(shader, shaderCode);
+        GLES20.glCompileShader(shader);
+
+        return shader;
     }
 }

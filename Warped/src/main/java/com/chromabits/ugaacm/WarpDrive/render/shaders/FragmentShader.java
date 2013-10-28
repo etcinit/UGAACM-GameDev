@@ -11,7 +11,7 @@ public class FragmentShader implements Shader{
     private int handle;
 
     public FragmentShader(String code){
-        code = code;
+        this.code = code;
         handle = -1;
     }
 

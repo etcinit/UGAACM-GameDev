@@ -20,10 +20,10 @@ public class VertexBuffer {
         vertices.add(v);
     }
 
-    public FloatBuffer getBuffer(boolean useColor){
+    public FloatBuffer getBuffer(){
         FloatBuffer buffer;
         // A float has 4 bytes so we allocate for each coordinate 4 bytes
-        ByteBuffer bbuffer = ByteBuffer.allocateDirect(vertices.size() * 3 * 4);
+        ByteBuffer bbuffer = ByteBuffer.allocateDirect(vertices.size() * Vertex.getVertexStride());
 
         bbuffer.order(ByteOrder.nativeOrder());
 
@@ -31,8 +31,8 @@ public class VertexBuffer {
         buffer = bbuffer.asFloatBuffer();
 
         // Put vertices on the float buffer
-        for(int i=0; i < vertices.size(); i++){
-            buffer.put(vertices.get(i).getFloatArray());
+        for (Vertex vertex : vertices) {
+            buffer.put(vertex.getFloatArray());
         }
 
         // Set position to the beginning of the buffer
