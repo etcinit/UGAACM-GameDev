@@ -55,7 +55,7 @@ public class VertexBuffer {
         return buffer;
     }
 
-    public int countVertices(){
+    public int count(){
         return vertices.size();
     }
 }

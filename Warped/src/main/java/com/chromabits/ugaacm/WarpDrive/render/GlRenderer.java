@@ -35,6 +35,15 @@ public class GlRenderer implements Renderer{
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
 
+        glp = new GlProgram();
+        VertexShader vs = VertexShader.getBasicShader();
+        FragmentShader fs = FragmentShader.getBasicShader();
+        vs.load();
+        fs.load();
+        glp.attachShader(vs);
+        glp.attachShader(fs);
+        glp.link();
+
         //currentWorld = new World();
 
         // Test code
@@ -107,7 +116,7 @@ public class GlRenderer implements Renderer{
         //Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
         //        new Vertex(0.5f,-0.5f,0.0f),
         //        new Vertex(0.0f,0.5f,0.0f));
-        t1.draw();
+        t1.draw(glp);
 
         //currentWorld.draw(glp);
     }
