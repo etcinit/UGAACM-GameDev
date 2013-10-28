@@ -39,7 +39,7 @@ public class VertexBuffer {
     public FloatBuffer getBuffer(){
         FloatBuffer buffer;
         // A float has 4 bytes so we allocate for each coordinate 4 bytes
-        ByteBuffer bbuffer = ByteBuffer.allocateDirect(vertices.size() * Vertex.getVertexStride());
+        ByteBuffer bbuffer = ByteBuffer.allocateDirect(vertices.size() * Vertex.getStride());
 
         bbuffer.order(ByteOrder.nativeOrder());
 

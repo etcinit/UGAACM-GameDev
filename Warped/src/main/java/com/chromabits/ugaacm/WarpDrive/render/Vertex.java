@@ -41,7 +41,11 @@ public class Vertex {
         return COORDS_PER_VERTEX;
     }
 
-    public static int getVertexStride(){
-        return Float.SIZE * COORDS_PER_VERTEX;
+    /**
+     * Get the size in bytes of a vertex
+     * @return Size in bytes
+     */
+    public static int getStride(){
+        return 4 * COORDS_PER_VERTEX;
     }
 }

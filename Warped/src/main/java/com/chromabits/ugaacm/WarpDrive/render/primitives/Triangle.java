@@ -86,9 +86,9 @@ public class Triangle extends Shape{
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
         // Prepare the triangle coordinate data
-        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX,
+        GLES20.glVertexAttribPointer(mPositionHandle, Vertex.COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
-                vertexStride, vertexBuffer.getBuffer());
+                Vertex.getStride(), vertexBuffer.getBuffer());
 
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
