@@ -48,7 +48,7 @@ public class Bootstrapper {
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Prepare engine
-        EngineThread engine = new EngineThread(game,glRenderer);
+        EngineThread engine = new EngineThread(game,glRenderer,glView);
 
         return engine;
     }
