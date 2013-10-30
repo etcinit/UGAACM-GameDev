@@ -38,8 +38,11 @@ public abstract class AndroidGame extends Activity implements Game {
         // Create a surfaceView instance
         glSurfaceV = new GLSurfaceView(this);
 
+        // Create new renderer
+        GlRenderer renderer = new GlRenderer();
+
         // Set renderer
-        glSurfaceV.setRenderer(new GlRenderer());
+        glSurfaceV.setRenderer(renderer);
 
         // Set main view
         setContentView(glSurfaceV);
