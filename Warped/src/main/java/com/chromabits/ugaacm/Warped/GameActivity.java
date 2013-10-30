@@ -1,30 +1,20 @@
 package com.chromabits.ugaacm.Warped;
 
-import android.app.ActivityManager;
-import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
-import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.view.Window;
-import android.view.WindowManager;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 
 import com.chromabits.ugaacm.WarpDrive.control.Bootstrapper;
-import com.chromabits.ugaacm.WarpDrive.control.EngineThread;
-import com.chromabits.ugaacm.WarpDrive.control.Game;
+import com.chromabits.ugaacm.WarpDrive.control.Engine;
 import com.chromabits.ugaacm.WarpDrive.render.Gl2SurfaceView;
-import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
-import com.chromabits.ugaacm.WarpDrive.control.Screen;
 import com.chromabits.ugaacm.WarpDrive.render.UnsupportedHardwareException;
 
 public class GameActivity extends Activity {
 
     private GLSurfaceView glSurfaceV;
     private Gl2SurfaceView glView;
-    private EngineThread engine;
+    private Engine engine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +24,6 @@ public class GameActivity extends Activity {
         // Attempt to load a game engine with Warped
         try{
             engine = new Bootstrapper(this).init(new Warped());
-            engine.run();
         }
         catch(UnsupportedHardwareException ex){
             // Hardware doesn't support GL ES 2
@@ -51,20 +40,24 @@ public class GameActivity extends Activity {
         return true;
     }
 
-    protected void OnResume() {
+    protected void onResume() {
+        super.onResume();
+
         // Notify engine that the application is resuming
         if(engine != null){
             engine.onResume();
         }
     }
 
-    protected void OnPause(){
+    protected void onPause(){
+        super.onPause();
+
         // Notify engine that the application pausing
         if(engine != null){
             engine.onPause();
 
             if(isFinishing()){
-                engine.isFinishing();
+                engine.onStopping();
             }
         }
     }

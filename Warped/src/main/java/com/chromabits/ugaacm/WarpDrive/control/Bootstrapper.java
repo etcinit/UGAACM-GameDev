@@ -28,13 +28,12 @@ public class Bootstrapper {
      * @param game Game to use on the engine
      * @return Engine thread
      */
-    public EngineThread init(Game game) throws UnsupportedHardwareException{
+    public Engine init(Game game) throws UnsupportedHardwareException{
         // Prepare activity
         glRenderer = new GlRenderer();
         glView = new Gl2SurfaceView(context);
         glView.setRenderer(glRenderer);
         glView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-        context.setContentView(glView);
 
         // Request to remove window title
         context.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -47,9 +46,29 @@ public class Bootstrapper {
         context.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // Add GL view
+        context.setContentView(glView);
+
         // Prepare engine
-        EngineThread engine = new EngineThread(game,glRenderer,glView);
+        Engine engine = new Engine(game,glRenderer,glView);
+
+        performOnBackgroundThread(engine);
 
         return engine;
+    }
+
+    private static Thread performOnBackgroundThread(final Runnable runnable) {
+        final Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    runnable.run();
+                } finally {
+
+                }
+            }
+        };
+        t.start();
+        return t;
     }
 }

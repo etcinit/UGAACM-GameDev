@@ -8,8 +8,6 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
-import com.chromabits.ugaacm.WarpDrive.render.primitives.Triangle;
 import com.chromabits.ugaacm.WarpDrive.render.shaders.FragmentShader;
 import com.chromabits.ugaacm.WarpDrive.render.shaders.VertexShader;
 
@@ -22,8 +20,6 @@ public class GlRenderer implements Renderer{
     private GlProgram glp;
     private Object mDrawLock;
     private boolean mDrawQueueChanged;
-
-    private Triangle t1;
 
     private float[] mViewMatrix = new float[16];
 
@@ -51,30 +47,6 @@ public class GlRenderer implements Renderer{
         }catch(Exception ex){
             ex.printStackTrace();
         }
-
-        mDrawQueue = new DrawQueue();
-
-        // Test code
-        Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
-        Rectangle r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
-        Rectangle r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
-        Rectangle r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
-
-
-        r1.setColor(Color.BLUE);
-        r2.setColor(Color.GREEN);
-        r3.setColor(Color.RED);
-
-        mDrawQueue.addObject(r1);
-        mDrawQueue.addObject(r2);
-        mDrawQueue.addObject(r3);
-        mDrawQueue.addObject(r4);
-
-        t1 = new Triangle();
-
-        //mDrawQueue.addObject(t1);
-
-
     }
 
     @Override
@@ -119,13 +91,6 @@ public class GlRenderer implements Renderer{
         // Move "camera" away by 5 units
         //gl.glTranslatef(0.0f,0.0f,-5.0f);
 
-        // TEMPORAL TEST CODE
-        // Draw a triangle
-        //Triangle t1 = new Triangle(new Vertex(-0.5f,-0.5f,0.0f),
-        //        new Vertex(0.5f,-0.5f,0.0f),
-        //        new Vertex(0.0f,0.5f,0.0f));
-        //t1.draw(glp);
-
         // Wait for the draw queue to be updated
         synchronized (mDrawLock){
             if(!mDrawQueueChanged){
@@ -134,6 +99,7 @@ public class GlRenderer implements Renderer{
                         mDrawLock.wait();
                     } catch (InterruptedException e) {
                         // Not critical if it happens
+                        Log.w("WarpGL","GlRenderer interrupted");
                         e.printStackTrace();
                     }
                 }
@@ -175,6 +141,7 @@ public class GlRenderer implements Renderer{
      */
     public synchronized void setDrawQueue(DrawQueue newQueue){
         synchronized (mDrawLock){
+            //Log.i("WarpGL","NEw queue");
             mDrawQueueChanged = true;
             mDrawQueue = newQueue;
         }
@@ -185,6 +152,13 @@ public class GlRenderer implements Renderer{
      */
     public synchronized void waitForDraw(){
 
+    }
+
+    public synchronized void onPause(){
+        synchronized (mDrawLock){
+            mDrawQueueChanged = true;
+            mDrawLock.notifyAll();
+        }
     }
 
     /**
