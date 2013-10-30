@@ -5,7 +5,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.GLU;
 import android.opengl.Matrix;
 import android.util.Log;
 
@@ -19,15 +18,19 @@ import com.chromabits.ugaacm.WarpDrive.render.shaders.VertexShader;
  */
 public class GlRenderer implements Renderer{
 
-    private World currentWorld;
+    private DrawQueue mDrawQueue;
     private GlProgram glp;
+    private Object mDrawLock;
+    private boolean mDrawQueueChanged;
 
     private Triangle t1;
 
     private float[] mViewMatrix = new float[16];
 
     public GlRenderer(){
-
+        // Initialize draw lock
+        mDrawLock = new Object();
+        mDrawQueueChanged = false;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class GlRenderer implements Renderer{
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
 
+        // For now the engine will be using very simple shaders
         try{
             glp = new GlProgram();
             VertexShader vs = VertexShader.getBasicShader();
@@ -48,7 +52,7 @@ public class GlRenderer implements Renderer{
             ex.printStackTrace();
         }
 
-        currentWorld = new World();
+        mDrawQueue = new DrawQueue();
 
         // Test code
         Rectangle r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
@@ -61,14 +65,14 @@ public class GlRenderer implements Renderer{
         r2.setColor(Color.GREEN);
         r3.setColor(Color.RED);
 
-        currentWorld.addObject(r1);
-        currentWorld.addObject(r2);
-        currentWorld.addObject(r3);
-        currentWorld.addObject(r4);
+        mDrawQueue.addObject(r1);
+        mDrawQueue.addObject(r2);
+        mDrawQueue.addObject(r3);
+        mDrawQueue.addObject(r4);
 
         t1 = new Triangle();
 
-        //currentWorld.addObject(t1);
+        //mDrawQueue.addObject(t1);
 
 
     }
@@ -107,7 +111,7 @@ public class GlRenderer implements Renderer{
     public void onDrawFrame(GL10 gl) {
         // Clear the screen and the depth buffer
         //gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
 
         // Reset model view matrix
         //gl.glLoadIdentity();
@@ -122,7 +126,34 @@ public class GlRenderer implements Renderer{
         //        new Vertex(0.0f,0.5f,0.0f));
         //t1.draw(glp);
 
-        currentWorld.draw(glp);
+        // Wait for the draw queue to be updated
+        synchronized (mDrawLock){
+            if(!mDrawQueueChanged){
+                while(!mDrawQueueChanged){
+                    try {
+                        mDrawLock.wait();
+                    } catch (InterruptedException e) {
+                        // Not critical if it happens
+                        e.printStackTrace();
+                    }
+                }
+            }
+            mDrawQueueChanged = false;
+        }
+
+        // Draw objects to the screen
+        synchronized (this){
+            if(mDrawQueue != null){
+                // Clear the screen
+                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+                // Draw queue
+                mDrawQueue.draw(glp);
+            }else{
+                // Clear the screen. We don't draw anything since there is now queue
+                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+            }
+        }
     }
 
     /**
@@ -135,6 +166,25 @@ public class GlRenderer implements Renderer{
         Matrix.setLookAtM(mViewMatrix, 0, eye.getX(), eye.getY(), eye.getZ(),
                 look.getX(), look.getY(), look.getZ(),
                 up.getX(), up.getY(), up.getZ());
+    }
+
+    /**
+     * Replaces the draw queue used by the renderer
+     * This function will lock while onDrawFrame is running
+     * @param newQueue
+     */
+    public synchronized void setDrawQueue(DrawQueue newQueue){
+        synchronized (mDrawLock){
+            mDrawQueueChanged = true;
+            mDrawQueue = newQueue;
+        }
+    }
+
+    /**
+     * This function will lock while onDrawFrame is running
+     */
+    public synchronized void waitForDraw(){
+
     }
 
     /**
