@@ -5,14 +5,16 @@ import com.chromabits.ugaacm.WarpDrive.control.Screen;
 
 public class Warped implements Game {
 
+    private Screen curScreen;
+
     @Override
     public void setScreen(Screen screen) {
-
+        this.curScreen = screen;
     }
 
     @Override
     public Screen getCurrentScreen() {
-        return null;
+        return this.curScreen;
     }
 
     @Override

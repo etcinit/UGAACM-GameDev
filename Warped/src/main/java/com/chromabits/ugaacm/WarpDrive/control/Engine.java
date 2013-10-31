@@ -3,15 +3,10 @@ package com.chromabits.ugaacm.WarpDrive.control;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.chromabits.ugaacm.WarpDrive.render.Color;
 import com.chromabits.ugaacm.WarpDrive.render.DrawQueue;
 import com.chromabits.ugaacm.WarpDrive.render.DrawQueueManager;
 import com.chromabits.ugaacm.WarpDrive.render.Gl2SurfaceView;
 import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
-import com.chromabits.ugaacm.WarpDrive.render.Vertex;
-import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
-import com.chromabits.ugaacm.Warped.LoadingScreen;
-import com.chromabits.ugaacm.Warped.MainMenuScreen;
 
 /**
  * Main Engine Thread
@@ -39,7 +34,7 @@ public class Engine implements Runnable {
 
     public Engine(Game game, GlRenderer renderer, Gl2SurfaceView view){
         this.game = game;
-        game.setScreen(new MainMenuScreen(game));
+        game.setScreen(game.getInitScreen());
         this.renderer = renderer;
         this.view = view;
 
