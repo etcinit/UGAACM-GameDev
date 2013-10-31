@@ -33,7 +33,7 @@ public class Bootstrapper {
         glRenderer = new GlRenderer();
         glView = new Gl2SurfaceView(context);
         glView.setRenderer(glRenderer);
-        glView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        glView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         // Request to remove window title
         context.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -15,7 +15,7 @@ public class DrawQueue implements Drawable{
         contents = new ArrayList<Drawable>();
     }
 
-    public void addObject(Drawable object){
+    public void add(Drawable object){
         contents.add(object);
     }
 
@@ -24,6 +24,10 @@ public class DrawQueue implements Drawable{
             return true;
         }
         return false;
+    }
+
+    public void clear(){
+        contents.clear();
     }
 
     @Override

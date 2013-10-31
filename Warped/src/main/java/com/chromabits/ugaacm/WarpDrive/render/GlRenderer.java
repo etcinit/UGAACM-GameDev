@@ -21,6 +21,7 @@ public class GlRenderer implements Renderer{
     private Object mDrawLock;
     private boolean mDrawQueueChanged;
 
+
     private float[] mViewMatrix = new float[16];
 
     public GlRenderer(){
