@@ -10,6 +10,8 @@ import com.chromabits.ugaacm.WarpDrive.render.Gl2SurfaceView;
 import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
 import com.chromabits.ugaacm.WarpDrive.render.Vertex;
 import com.chromabits.ugaacm.WarpDrive.render.primitives.Rectangle;
+import com.chromabits.ugaacm.Warped.LoadingScreen;
+import com.chromabits.ugaacm.Warped.MainMenuScreen;
 
 /**
  * Main Engine Thread
@@ -35,14 +37,9 @@ public class Engine implements Runnable {
     // Timing
     private long lastTime;
 
-    // <<<<< TEST CODE >>>>>
-    // PUT ANYTHING YOU NEED TO TEST HERE
-    private Rectangle r1, r2, r3, r4;
-    private boolean anim;
-    // <<<<< END TEST CODE >>>>>
-
     public Engine(Game game, GlRenderer renderer, Gl2SurfaceView view){
         this.game = game;
+        game.setScreen(new MainMenuScreen(game));
         this.renderer = renderer;
         this.view = view;
 
@@ -55,7 +52,6 @@ public class Engine implements Runnable {
 
         lastTime = SystemClock.uptimeMillis();
 
-        anim = false;
     }
 
     @Override
@@ -85,27 +81,13 @@ public class Engine implements Runnable {
 
                 DrawQueue curQueue = queues.getWorkingQueue();
 
-                // <<<<< TEST CODE >>>>>
-                // PUT ANYTHING YOU NEED TO TEST HERE
+                // <<<<< BEGIN GAME CODE >>>>>
 
-                if(anim){
-                    r1.setColor(Color.BLUE);
-                    r2.setColor(Color.GREEN);
-                    r3.setColor(Color.RED);
-                    anim = !anim;
-                }else{
-                    r1.setColor(Color.GREEN);
-                    r2.setColor(Color.RED);
-                    r3.setColor(Color.BLUE);
-                    anim = !anim;
-                }
 
-                curQueue.add(r1);
-                curQueue.add(r2);
-                curQueue.add(r3);
-                curQueue.add(r4);
+                game.getCurrentScreen().updateLogic();
+                game.getCurrentScreen().addElements(curQueue);
 
-                // <<<<< END TEST CODE >>>>>
+                // <<<<< END GAME CODE >>>>>
 
                 // Swap draw queues
                 queues.swap();
@@ -151,15 +133,7 @@ public class Engine implements Runnable {
         // <<<<< TEST CODE >>>>>
         // PUT ANYTHING YOU NEED TO TEST HERE
 
-        // Create some rectangles
-        r1 = new Rectangle(new Vertex(-0.5f,-0.5f,0.0f), new Vertex(-0.2f,-0.2f,0.0f));
-        r2 = new Rectangle(new Vertex(-0.5f,0.2f,0.0f), new Vertex(-0.2f,0.5f,0.0f));
-        r3 = new Rectangle(new Vertex(0.2f,0.2f,0.0f), new Vertex(0.5f,0.5f,0.0f));
-        r4 = new Rectangle(new Vertex(0.2f,-0.5f,0.0f), new Vertex(0.5f,-0.2f,0.0f));
 
-        r1.setColor(Color.BLUE);
-        r2.setColor(Color.GREEN);
-        r3.setColor(Color.RED);
 
         //drawQueue.addObject(r1);
         //drawQueue.addObject(r2);
