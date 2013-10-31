@@ -16,8 +16,6 @@ public abstract class Screen {
 
 //    public abstract void updateSound();
 
-//    public abstract void updatePhysics();
-
     public abstract void renderScreen();
 
 
