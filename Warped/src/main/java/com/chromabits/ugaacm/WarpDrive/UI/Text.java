@@ -1,6 +1,6 @@
 package com.chromabits.ugaacm.WarpDrive.UI;
 
-import javax.microedition.khronos.opengles.GL10;
+import com.chromabits.ugaacm.WarpDrive.render.GlProgram;
 
 public class Text implements TextInterface{
 
@@ -18,7 +18,7 @@ public class Text implements TextInterface{
         this.fontSize = fontSize;
     }
 
-    public void draw(GL10 world) {
+    public void draw(GlProgram world) {
 
         // TODO Implement this method once Rendering is complete
 

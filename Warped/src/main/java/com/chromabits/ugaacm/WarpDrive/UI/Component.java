@@ -1,7 +1,7 @@
 package com.chromabits.ugaacm.WarpDrive.UI;
 
 import java.util.Vector;
-import javax.microedition.khronos.opengles.GL10;
+import com.chromabits.ugaacm.WarpDrive.render.GlProgram;
 
 public class Component implements ComponentInterface {
 
@@ -100,7 +100,7 @@ public class Component implements ComponentInterface {
     }
 
 
-    public void draw(GL10 world) {
+    public void draw(GlProgram world) {
 
         // TODO Implement this method once Rendering is complete
 
