@@ -1,5 +1,7 @@
 package com.chromabits.ugaacm.WarpDrive.control;
 
+import com.chromabits.ugaacm.WarpDrive.render.DrawQueue;
+
 /*
     This class should provide methods to alter the "screen". There should
     be different screens for each game mode, as well as levels (e.g. Loading Screen, Menu Screen).
@@ -16,7 +18,7 @@ public abstract class Screen {
 
 //    public abstract void updateSound();
 
-    public abstract void renderScreen();
+    public abstract void addElements(DrawQueue curQueue);
 
 
     public abstract void pause();

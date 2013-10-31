@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chromabits.ugaacm.WarpDrive.control.*;
+import com.chromabits.ugaacm.WarpDrive.render.DrawQueue;
 import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
 
 public class GameScreen extends Screen {
@@ -51,7 +52,7 @@ public class GameScreen extends Screen {
     }
 
     @Override
-    public void renderScreen() {
+    public void addElements(DrawQueue curQueue) {
 
         // Draw Game Elements
         // TODO Auto-generated method stub
