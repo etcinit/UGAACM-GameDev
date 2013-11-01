@@ -9,14 +9,25 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class DrawQueue implements Drawable{
 
+    private Color backgroundColor;
+
     private ArrayList<Drawable> contents;
 
     public DrawQueue(){
         contents = new ArrayList<Drawable>();
+        backgroundColor = Color.BLACK;
     }
 
     public void add(Drawable object){
         contents.add(object);
+    }
+
+    public void setBgColor(Color backgroundColor){
+        this.backgroundColor = backgroundColor;
+    }
+
+    public Color getBgColor(){
+        return backgroundColor;
     }
 
     public boolean isNotEmpty(){
@@ -31,9 +42,9 @@ public class DrawQueue implements Drawable{
     }
 
     @Override
-    public void draw(GlProgram glp) {
+    public void draw(GlRendererContext glrc) {
         for (Drawable object : contents) {
-            object.draw(glp);
+            object.draw(glrc);
         }
     }
 }

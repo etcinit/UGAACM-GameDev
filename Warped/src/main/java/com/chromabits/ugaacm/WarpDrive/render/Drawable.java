@@ -7,6 +7,6 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public interface Drawable {
 
-    public void draw(GlProgram glp);
+    public void draw(GlRendererContext glrc);
 
 }

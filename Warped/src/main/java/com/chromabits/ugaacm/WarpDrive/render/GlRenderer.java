@@ -18,6 +18,8 @@ public class GlRenderer implements Renderer{
 
     private DrawQueue mDrawQueue;
     private GlProgram glp;
+    private GlRendererContext glrc;
+    private Camera mCamera;
     private Object mDrawLock;
     private boolean mDrawQueueChanged;
 
@@ -33,7 +35,10 @@ public class GlRenderer implements Renderer{
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
         // Set the background frame color
-        GLES20.glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+        mCamera = new Camera();
+
 
         // For now the engine will be using very simple shaders
         try{
@@ -45,6 +50,9 @@ public class GlRenderer implements Renderer{
             glp.attachShader(vs);
             glp.attachShader(fs);
             glp.link();
+
+            // Create the default render context
+            glrc = new GlRendererContext(glp);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -112,10 +120,12 @@ public class GlRenderer implements Renderer{
         synchronized (this){
             if(mDrawQueue != null){
                 // Clear the screen
+                Color ccolor = mDrawQueue.getBgColor();
+                GLES20.glClearColor(ccolor.getR(),ccolor.getG(),ccolor.getB(),ccolor.getAlpha());
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
                 // Draw queue
-                mDrawQueue.draw(glp);
+                mDrawQueue.draw(glrc);
             }else{
                 // Clear the screen. We don't draw anything since there is now queue
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);

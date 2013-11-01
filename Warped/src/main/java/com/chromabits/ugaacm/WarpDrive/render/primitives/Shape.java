@@ -6,6 +6,7 @@ import com.chromabits.ugaacm.WarpDrive.render.Color;
 import com.chromabits.ugaacm.WarpDrive.render.Drawable;
 import com.chromabits.ugaacm.WarpDrive.render.GlProgram;
 import com.chromabits.ugaacm.WarpDrive.render.GlRenderer;
+import com.chromabits.ugaacm.WarpDrive.render.GlRendererContext;
 import com.chromabits.ugaacm.WarpDrive.render.Vertex;
 import com.chromabits.ugaacm.WarpDrive.render.VertexBuffer;
 
@@ -36,7 +37,9 @@ public class Shape implements Drawable{
     }
 
     @Override
-    public void draw(GlProgram glp) {
+    public void draw(GlRendererContext glrc) {
+        GlProgram glp = glrc.getDefaultProgram();
+
         int mProgram = glp.getHandle();
 
         // Add program to OpenGL environment
