@@ -2,6 +2,7 @@ package com.chromabits.ugaacm.Warped;
 
 import com.chromabits.ugaacm.WarpDrive.control.Game;
 import com.chromabits.ugaacm.WarpDrive.control.Screen;
+import com.chromabits.ugaacm.WarpDrive.render.DrawQueue;
 
 public class LoadingScreen extends Screen {
     public LoadingScreen(Game game) {
@@ -20,7 +21,7 @@ public class LoadingScreen extends Screen {
 
 
     @Override
-    public void renderScreen() {
+    public void addElements(DrawQueue curQueue) {
 
         // Only needed if we want a viewable load screen
 
